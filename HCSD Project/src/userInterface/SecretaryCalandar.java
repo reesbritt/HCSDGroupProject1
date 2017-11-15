@@ -18,30 +18,41 @@ public class SecretaryCalandar extends JFrame{
 		setTitle("Weekly calandar");
 		setSize(screenDimensions.width/2, screenDimensions.height/2); 
 		setLocation(new Point(screenDimensions.width/4, screenDimensions.height/4));
-		//event handler for text fields in a non static member class
+		//Colours to be used 
+		Color bC = new Color(152, 175, 199);
+		Color gC = new Color(199, 176, 151);
+		Color ggC = new Color(150, 197, 173);
+		Color ttC = new Color(197, 150, 173);
 	
-		
+		//add text fields
+		JTextField fTexts[] = new JTextField[5];
+		for (int i = 0; i < 5; i++){
+			fTexts[i] = new JTextField(20);
+			fTexts[i].setBackground(ggC);
+		}
 		//field panels 
 		JPanel fieldPanel = new JPanel(); 
 		fieldPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		for (int i = 1; i < 4; i++){
-			for(int j = 1; j < 5; j++){
+		for (int i = 0; i < 5; i++){
+			for(int j = 0; j < 5; j++){
 				fieldPanel.setOpaque(false);
 				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = j-1;
+				c.gridx = j;
 				c.gridy = i;
-				c.ipady = 120;
-				c.ipadx = 120;
-				fieldPanel.add(new JTextField(20), c);
+				c.ipady = 30;
+				c.ipadx = 100;
+				c.ipadx = c.ipadx + 50;
+				fieldPanel.add(fTexts[i], c);
+				
 			}
 		}
 		Border blueborder = BorderFactory.createLineBorder(Color.BLUE, 1);
 		Border orangeborder = BorderFactory.createLineBorder(Color.ORANGE,1);
 		Border margin = new EmptyBorder(10,50,10,50);
 		String daysOfWeek[] = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
-		Color bC = new Color(152, 175, 199);
-		Color gC = new Color(199, 176, 151 );
+		
+		
 		//create array of jlabels displaying the days of the week 
 		JLabel labelsOfWeek[] = new JLabel[5]; 
 		for (int i=0; i<5; i++){
