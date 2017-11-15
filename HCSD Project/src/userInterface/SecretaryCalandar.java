@@ -25,9 +25,9 @@ public class SecretaryCalandar extends JFrame{
 		JPanel fieldPanel = new JPanel(); 
 		fieldPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		for (int i = 1; i < 3; i++){
-			for(int j = 1; j < 2; j++){
-				c.insets = new Insets(5,5,5,5); //top padding
+		for (int i = 1; i < 4; i++){
+			for(int j = 1; j < 5; j++){
+				fieldPanel.setOpaque(false);
 				c.fill = GridBagConstraints.HORIZONTAL;
 				c.gridx = j-1;
 				c.gridy = i;
@@ -78,6 +78,7 @@ public class SecretaryCalandar extends JFrame{
 		contentPane.setLayout(new BorderLayout());
 		contentPane.add(fieldPanel, BorderLayout.CENTER);
 		contentPane.add(days, BorderLayout.NORTH);
+		contentPane.setBackground(bC);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		
