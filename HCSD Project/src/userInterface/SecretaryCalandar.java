@@ -3,79 +3,70 @@ package userInterface;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
-import java.awt.*;
-
+import java.awt.*; 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder; 
 
 public class SecretaryCalandar extends JFrame{ 
-                               
+    //variables 
+	private static Color bC = new Color( 0, 98, 139);
+	//font 
+	private static Font font = new Font(Font.SERIF, Font.BOLD,15);
+	private static Border grayborder = BorderFactory.createLineBorder(Color.gray, 1);
+	private static Border margin = new EmptyBorder(15,50,15,50);
+	
+	//methods
+	//take an array of J Labels, give them the same design
+	public JLabel[] designLabels (JLabel[] l, String[] s){
+		
+		for (int i = 0; i < l.length; i++){
+			l[i] = new JLabel(s[i]);
+			l[i].setOpaque(true);
+			l[i].setFont(font);
+			l[i].setForeground(Color.WHITE);
+			l[i].setBorder(new CompoundBorder(
+					grayborder, margin 
+					));
+			l[i].setBackground(bC);
+		}
+		return l; 
+	}
+	//take a panel and add labels to the panel 
+	public JPanel addToPanel (JLabel[] labels, JPanel panel ){
+		for (int i = 0; i < labels.length; i++){
+			panel.add(labels[i]);
+		}
+		return panel; 
+	}
 	public SecretaryCalandar(){
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension screenDimensions = toolkit.getScreenSize();
 		setTitle("Weekly calandar");
 		setSize(screenDimensions.width/2, screenDimensions.height/2); 
 		setLocation(new Point(screenDimensions.width/4, screenDimensions.height/4));
-		//Colours to be used 
-		Color bC = new Color(152, 175, 199);
-		Color gC = new Color(199, 176, 151);
-		Color ggC = new Color(150, 197, 173);
-		Color ttC = new Color(197, 150, 173);
-	
-		//add text fields
-		JTextField fTexts[] = new JTextField[5];
-		for (int i = 0; i < 5; i++){
-			fTexts[i] = new JTextField(20);
-			fTexts[i].setBackground(ggC);
-		}
-		//field panels 
-		JPanel fieldPanel = new JPanel(); 
-		fieldPanel.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		for (int i = 0; i < 5; i++){
-			for(int j = 0; j < 5; j++){
-				fieldPanel.setOpaque(false);
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = j;
-				c.gridy = i;
-				c.ipady = 30;
-				c.ipadx = 100;
-				c.ipadx = c.ipadx + 50;
-				fieldPanel.add(fTexts[i], c);
-				
-			}
-		}
-		Border blueborder = BorderFactory.createLineBorder(Color.BLUE, 1);
-		Border orangeborder = BorderFactory.createLineBorder(Color.ORANGE,1);
-		Border margin = new EmptyBorder(10,50,10,50);
-		String daysOfWeek[] = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
-		
+	    String daysOfWeek[] = {"         ","Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
 		
 		//create array of jlabels displaying the days of the week 
-		JLabel labelsOfWeek[] = new JLabel[5]; 
-		for (int i=0; i<5; i++){
-			labelsOfWeek[i] = new JLabel(daysOfWeek[i]);
-			labelsOfWeek[i].setOpaque(true);
-			if (i % 2 == 0) {
-				labelsOfWeek[i].setBorder(new CompoundBorder(
-						blueborder, margin 
-						));
-				labelsOfWeek[i].setBackground(bC);
-			}else {
-				labelsOfWeek[i].setBorder(new CompoundBorder(
-						orangeborder,margin));
-				labelsOfWeek[i].setBackground(gC);
-			}
-		}
-		JPanel days = new JPanel(); 
+		JLabel labelsOfWeek[] = new JLabel[6]; 
+		designLabels(labelsOfWeek, daysOfWeek); //add colour to the labels and add them to an array 
+		JPanel days = new JPanel(); //create a panel for the labels 
 		days.setLayout(new BoxLayout(days,BoxLayout.X_AXIS));
-		for (int i = 0; i<5; i++){
-
-			days.add(labelsOfWeek[i]);
-		}
+		addToPanel(labelsOfWeek, days);//add labels to panel 
 		
+		//Create timeslots for appointments 9,5
+		String times[] = {"9am  ", "10am","11am", "12pm", "1pm  ", "2pm  ", "3pm  ", "4pm  "};
+		JLabel timeSlots[] = new JLabel[7];
+		designLabels(timeSlots, times); 
+		
+		JPanel time = new JPanel();
+		time.setLayout(new BoxLayout(time,BoxLayout.PAGE_AXIS));
+		addToPanel(timeSlots, time); 
+		  
+		//create appointment slot boxes 
+		JPanel appointments = new JPanel();
+		appointments.setLayout(new GridLayout());
 		//add menu 
 		JMenuBar menuBar = new JMenuBar(); 
 		this.setJMenuBar(menuBar);
@@ -87,9 +78,9 @@ public class SecretaryCalandar extends JFrame{
         // add container for entire screen
 		Container contentPane = getContentPane(); 
 		contentPane.setLayout(new BorderLayout());
-		contentPane.add(fieldPanel, BorderLayout.CENTER);
 		contentPane.add(days, BorderLayout.NORTH);
-		contentPane.setBackground(bC);
+		contentPane.add(time, BorderLayout.WEST); 
+		contentPane.setBackground(Color.GRAY);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		
