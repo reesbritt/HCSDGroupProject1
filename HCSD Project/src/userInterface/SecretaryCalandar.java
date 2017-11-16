@@ -12,12 +12,17 @@ import javax.swing.border.EmptyBorder;
 public class SecretaryCalandar extends JFrame{ 
     //variables 
 	private static Color bC = new Color( 0, 98, 139);
+	private static Color silver = new Color(192,192,192);
 	//font 
 	private static Font font = new Font(Font.SERIF, Font.BOLD,15);
+	private static Font tFieldFont = new Font(Font.SERIF,Font.BOLD,2);
 	private static Border grayborder = BorderFactory.createLineBorder(Color.gray, 1);
 	private static Border margin = new EmptyBorder(15,50,15,50);
+	private static Box[] box = new Box[10];
 	
 	//methods
+	//event listener for appointment booking slots highlight when hovered over 
+
 	//take an array of J Labels, give them the same design
 	public JLabel[] designLabels (JLabel[] l, String[] s){
 		
@@ -40,6 +45,23 @@ public class SecretaryCalandar extends JFrame{
 		}
 		return panel; 
 	}
+	public JLabel[] editFields (JLabel[] fields){
+		for (int i = 0;i< fields.length; i++){
+			fields[i] = new JLabel("hello");
+			fields[i].setOpaque(true);
+			fields[i].setForeground(silver);
+			fields[i].setBorder(grayborder);
+			
+		}
+		return fields ;
+	}
+	public JPanel addTextField (JLabel[] fields, JPanel panel){
+		for (int i = 0; i < fields.length; i++){
+			panel.add(fields[i]);
+		}
+		return panel;
+	}
+	
 	public SecretaryCalandar(){
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension screenDimensions = toolkit.getScreenSize();
@@ -66,7 +88,13 @@ public class SecretaryCalandar extends JFrame{
 		  
 		//create appointment slot boxes 
 		JPanel appointments = new JPanel();
-		appointments.setLayout(new GridLayout());
+		appointments.setLayout(new GridLayout(3,3));
+		JLabel bookings[] = new JLabel[12];
+		editFields(bookings); 
+		addTextField(bookings, appointments); 
+		//add event listener for appointment bookings 
+		
+		
 		//add menu 
 		JMenuBar menuBar = new JMenuBar(); 
 		this.setJMenuBar(menuBar);
@@ -80,6 +108,7 @@ public class SecretaryCalandar extends JFrame{
 		contentPane.setLayout(new BorderLayout());
 		contentPane.add(days, BorderLayout.NORTH);
 		contentPane.add(time, BorderLayout.WEST); 
+		contentPane.add(appointments, BorderLayout.CENTER);
 		contentPane.setBackground(Color.GRAY);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 

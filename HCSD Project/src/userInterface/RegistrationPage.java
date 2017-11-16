@@ -10,7 +10,7 @@ import java.awt.Point;
 import javax.swing.*;
 
 public class RegistrationPage extends JFrame {
-	
+	 
 	public RegistrationPage(){
 		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -25,8 +25,11 @@ public class RegistrationPage extends JFrame {
 		title.addItem("Dr");
 		
 		JComboBox dayOB = new JComboBox();
+		//add all days of the month 
+		for (int i = 1; i<32;i++){
+			dayOB.addItem(i);
+		}
 		
-		dayOB.addItem("1");
 		
 		JTextField firstName = new JTextField(20);
 		JTextField surname = new JTextField(20);
