@@ -31,6 +31,15 @@ public class PatientInfomation extends JFrame {
 		infoPanel.add(new JLabel("Outstanding payments:  ")); 
 		infoPanel.add(outstandingPayment);
 		infoPanel.setVisible(false);
+		//BUTTON TO CHANGE TO APPOINTMENT PAGE 
+		JButton bookappointment = new JButton("Book next appointment"); 
+		bookappointment.setVisible(false);
+		bookappointment.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				bA.setVisible(true);
+				info.setVisible(false);
+			}
+		});
 		
 		//add all names to combo box, click a name and click enter then open all the details about that patient
 		JPanel panel = new JPanel(); 
@@ -43,19 +52,13 @@ public class PatientInfomation extends JFrame {
 			public void actionPerformed(ActionEvent e){
 				infoPanel.setVisible(true);
 				comboBox.setVisible(false);
+				bookappointment.setVisible(true); 
 			}
 		});
 
 		panel.add(comboBox);
 		panel.add(confirm);
-		//BUTTON TO CHANGE TO APPOINTMENT PAGE 
-		JButton bookappointment = new JButton("Book next appointment"); 
-		bookappointment.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				bA.setVisible(true);
-				info.setVisible(false);
-			}
-		});
+	
 		panel.add(bookappointment);
 		
 		
