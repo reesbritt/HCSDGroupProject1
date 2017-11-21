@@ -1,6 +1,8 @@
 package userInterface;
 import javax.swing.*; 
+
 import java.awt.*;
+import java.awt.event.*; 
 public class PatientInfomation extends JFrame {
 	
 	
@@ -12,17 +14,6 @@ public class PatientInfomation extends JFrame {
 		setTitle("Patient infomation");
 		setSize(screenDimensions.width/2, screenDimensions.height/2); 
 		setLocation(new Point(screenDimensions.width/4, screenDimensions.height/4));
-		
-		//add all names to combo box, click a name and click enter then open all the details about that patient
-		JPanel panel = new JPanel(); 
-		panel.setLayout(new FlowLayout());
-		JComboBox comboBox = new JComboBox();
-		comboBox.setEditable(true);
-		JButton confirm = new JButton("Confirm"); 
-		panel.add(comboBox);
-		panel.add(confirm);
-		//homepage button
-		JButton back = new JButton("back");
 		//patient details, make invisible until confirm has been clicked
 		JTextField  outstandingPayment = new JTextField(20);
 		JTextField healthcare = new JTextField(20);
@@ -32,12 +23,38 @@ public class PatientInfomation extends JFrame {
 		infoPanel.add(outstandingPayment);
 		infoPanel.add(new JLabel("Healthcare plan"));
 		infoPanel.add(healthcare);
+		infoPanel.setVisible(false);
+		//add all names to combo box, click a name and click enter then open all the details about that patient
+		JPanel panel = new JPanel(); 
+		panel.setLayout(new FlowLayout());
+		JComboBox comboBox = new JComboBox();
+		comboBox.setEditable(true);
+		JButton confirm = new JButton("Confirm"); 
+		confirm.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				infoPanel.setVisible(true);
+				comboBox.setVisible(false);
+			}
+		});
+		panel.add(comboBox);
+		panel.add(confirm);
+		//homepage button
+		
+		
+		//add button to
+		JButton back = new JButton("back");
+		back.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				infoPanel.setVisible(false);
+				comboBox.setVisible(true);
+			}
+		});
 		//Container
 		Container contentPane = getContentPane(); 
 		contentPane.setLayout(new BorderLayout());
 		contentPane.add(panel, BorderLayout.WEST);
 		contentPane.add(back, BorderLayout.SOUTH);
-		
+		contentPane.add(infoPanel,BorderLayout.CENTER);
 	}
 	
 	
