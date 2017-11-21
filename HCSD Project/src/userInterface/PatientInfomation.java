@@ -28,15 +28,17 @@ public class PatientInfomation extends JFrame {
 		JTextField healthcare = new JTextField(20);
 		JPanel infoPanel = new JPanel();
 		infoPanel.setLayout(new GridLayout(0,2));
-		infoPanel.add(new JLabel("Name:"));
+		infoPanel.add(new JLabel("Outstanding payments: "));
 		infoPanel.add(outstandingPayment);
-		infoPanel.add(new JLabel("Healthcare plan"));
+		infoPanel.add(new JLabel("Healthcare plan: "));
 		infoPanel.add(healthcare);
+		
 		//Container
 		Container contentPane = getContentPane(); 
 		contentPane.setLayout(new BorderLayout());
 		contentPane.add(panel, BorderLayout.WEST);
 		contentPane.add(back, BorderLayout.SOUTH);
+		contentPane.add(infoPanel, BorderLayout.CENTER); 
 		
 	}
 	
