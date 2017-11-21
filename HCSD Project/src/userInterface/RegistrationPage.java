@@ -30,6 +30,17 @@ public class RegistrationPage extends JFrame {
 			dayOB.addItem(i);
 		}
 		
+		JComboBox monthOB = new JComboBox();
+		//add all days of the month 
+		for (int i = 1; i<13;i++){
+			monthOB.addItem(i);
+		}
+		
+		JComboBox yearOB = new JComboBox();
+		//add all days of the month 
+		for (int i = 1; i<118;i++){
+			yearOB.addItem(1900+i);
+		}
 		
 		JTextField firstName = new JTextField(20);
 		JTextField surname = new JTextField(20);
@@ -46,6 +57,10 @@ public class RegistrationPage extends JFrame {
 		formPanel.add(surname);
 		formPanel.add(new JLabel("Day of birth"));
 		formPanel.add(dayOB);
+		formPanel.add(new JLabel("Month of birth"));
+		formPanel.add(monthOB);
+		formPanel.add(new JLabel("Year of birth"));
+		formPanel.add(yearOB);
 		
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
