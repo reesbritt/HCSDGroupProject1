@@ -45,6 +45,8 @@ public class RegistrationPage extends JFrame {
 		JTextField firstName = new JTextField(20);
 		JTextField surname = new JTextField(20);
 		
+		JRadioButton healthPlan = new JRadioButton("Health plan?");
+		
 		
 		
 		JPanel formPanel = new JPanel();
@@ -61,6 +63,9 @@ public class RegistrationPage extends JFrame {
 		formPanel.add(monthOB);
 		formPanel.add(new JLabel("Year of birth"));
 		formPanel.add(yearOB);
+		formPanel.add(new JLabel(""));
+		formPanel.add(healthPlan);
+		
 		
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
