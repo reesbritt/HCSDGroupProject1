@@ -21,12 +21,11 @@ CREATE TABLE IF NOT EXISTS `Receipt` (
 );
 CREATE TABLE IF NOT EXISTS `Patient` (
 	`PatientID`	 INTEGER,
-	`Field2`	 INTEGER,
-    `Title`  	 VarChar(4)
-    `DOB`		 Date
-    `First name` VarChar(20)
-    `Surname`	 VarChar(20)
-    `Health plan`Char(1)
+    `Title`  	 VarChar(4),
+    `DOB`		 Date,
+    `First name` VarChar(20),
+    `Surname`	 VarChar(20),
+    `Health plan`Char(1),
     
 	PRIMARY KEY(`PatientID`)
 );

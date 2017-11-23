@@ -9,6 +9,7 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.sql.*;
 
 public class RegistrationPage extends JFrame {
 	 
@@ -90,15 +91,23 @@ public class RegistrationPage extends JFrame {
 				String surnameValue=surname.getText().toString();
 				
 				if (healthPlan.isSelected()){
-					Boolean healthPlanValue = true;
+					char healthPlanValue = 'Y';
 				}
 				else{
-					Boolean healthPlanValue = false;
-					
-			    Statement stmt = con.createStatement();
-			    ResultSet rs = stmt.executeQuery("INSERT INTO PATIENT()");
+					char healthPlanValue = 'N';
 				}
+				Connection con = null;
 				
+				String SQL = "INSERT INTO Patients VALUES (?, ?, ?, ?, ?, ?)";
+				PreparedStatement pstmt = con.prepareStatement(SQL);
+				p.setInt(1, num);
+				p.setString(2, titleValue);
+				p.setString(3, dayOBvalue);
+				p.setString(4, firstNameValue);
+				p.setString(5, surnameValue);
+				p.setString(6, healthPlanValue);
+				pstmt.executeUpdate();
+				pstmt.close();
 			}
 		});
 	}
