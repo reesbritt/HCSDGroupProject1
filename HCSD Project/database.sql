@@ -20,8 +20,14 @@ CREATE TABLE IF NOT EXISTS `Receipt` (
 	`SystemID`	INTEGER
 );
 CREATE TABLE IF NOT EXISTS `Patient` (
-	`PatientID`	INTEGER,
-	`Field2`	INTEGER,
+	`PatientID`	 INTEGER,
+	`Field2`	 INTEGER,
+    `Title`  	 VarChar(4)
+    `DOB`		 Date
+    `First name` VarChar(20)
+    `Surname`	 VarChar(20)
+    `Health plan`Char(1)
+    
 	PRIMARY KEY(`PatientID`)
 );
 CREATE TABLE IF NOT EXISTS `Hygienist` (
