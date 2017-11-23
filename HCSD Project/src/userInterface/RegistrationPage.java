@@ -6,7 +6,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.Point;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class RegistrationPage extends JFrame {
@@ -16,6 +17,7 @@ public class RegistrationPage extends JFrame {
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		
 		JButton button = new JButton("Submit");
+		
 		
 		JComboBox title = new JComboBox();
 		title.addItem("Mr");
@@ -48,7 +50,6 @@ public class RegistrationPage extends JFrame {
 		JRadioButton healthPlan = new JRadioButton("Health plan?");
 		
 		
-		
 		JPanel formPanel = new JPanel();
 		formPanel.setLayout(new GridLayout(0,2));
 		formPanel.add(new JLabel("Title:"));
@@ -77,7 +78,31 @@ public class RegistrationPage extends JFrame {
 		Dimension screenDimensions = toolkit.getScreenSize();
 		setSize(screenDimensions.width/2, screenDimensions.height/2);
 		setLocation(new Point(screenDimensions.width/4, screenDimensions.height/4));	
+		
+		//event listener
+		button.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				String titleValue = title.getSelectedItem().toString();
+				String dayOBValue = dayOB.getSelectedItem().toString();
+				String monthOBValue = monthOB.getSelectedItem().toString();
+				String yearOBValue = yearOB.getSelectedItem().toString();
+				String firstNameValue=firstName.getText().toString();
+				String surnameValue=surname.getText().toString();
+				
+				if (healthPlan.isSelected()){
+					Boolean healthPlanValue = true;
+				}
+				else{
+					Boolean healthPlanValue = false;
+					
+			    Statement stmt = con.createStatement();
+			    ResultSet rs = stmt.executeQuery("INSERT INTO PATIENT()");
+				}
+				
+			}
+		});
 	}
+	
 	
 	public static void main(String[] args) {
 		RegistrationPage regPage = new RegistrationPage();
