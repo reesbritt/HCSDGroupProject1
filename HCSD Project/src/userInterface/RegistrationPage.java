@@ -89,23 +89,30 @@ public class RegistrationPage extends JFrame {
 				String yearOBValue = yearOB.getSelectedItem().toString();
 				String firstNameValue=firstName.getText().toString();
 				String surnameValue=surname.getText().toString();
-				
+				char healthPlanValue = 'N';
+						
 				if (healthPlan.isSelected()){
-					char healthPlanValue = 'Y';
+					healthPlanValue = 'Y';
 				}
-				else{
-					char healthPlanValue = 'N';
-				}
+				
 				Connection con = null;
+				
+				java.sql.Statement statement = con.createStatement();
+				String maxString = "SELECT MAX(PatientID) from Patient";
+				ResultSet rs = statement.executeQuery(maxString);
+				
+				rs.next();
+				Integer max = rs.getInt(1);
+				Integer num = max + 1;
 				
 				String SQL = "INSERT INTO Patients VALUES (?, ?, ?, ?, ?, ?)";
 				PreparedStatement pstmt = con.prepareStatement(SQL);
-				p.setInt(1, num);
-				p.setString(2, titleValue);
-				p.setString(3, dayOBvalue);
-				p.setString(4, firstNameValue);
-				p.setString(5, surnameValue);
-				p.setString(6, healthPlanValue);
+				pstmt.setInt(1, num);
+				pstmt.setString(2, titleValue);
+				pstmt.setString(3, dayOBValue+"/"+monthOBValue+"/"+yearOBValue);
+				pstmt.setString(4, firstNameValue);
+				pstmt.setString(5, surnameValue);
+				pstmt.setString(6, healthPlanValue);
 				pstmt.executeUpdate();
 				pstmt.close();
 			}

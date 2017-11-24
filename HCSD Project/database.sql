@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `Patient` (
     `DOB`		 Date,
     `First name` VarChar(20),
     `Surname`	 VarChar(20),
-    `Health plan`Char(1),
+    `Health plan`VarChar(1),
     
 	PRIMARY KEY(`PatientID`)
 );
