@@ -89,21 +89,34 @@ public class RegistrationPage extends JFrame {
 				String yearOBValue = yearOB.getSelectedItem().toString();
 				String firstNameValue=firstName.getText().toString();
 				String surnameValue=surname.getText().toString();
-				char healthPlanValue = 'N';
+				String healthPlanValue = "N";
 						
 				if (healthPlan.isSelected()){
-					healthPlanValue = 'Y';
+					healthPlanValue = "Y";
 				}
 				
 				Connection con = null;
 				
-				java.sql.Statement statement = con.createStatement();
+				try {
+					   Class.forName("com.mysql.jdbc.Driver");
+					}
+					catch(ClassNotFoundException ex) {
+					   System.out.println("Error: unable to load driver class!");
+					   System.exit(1);
+					}
+				
+				String URL = "jdbc:mysql://localhost/database";
+				String USER = "username";
+				String PASS = "password";
+						
+				con = DriverManager.getConnection(URL, USER, PASS);
+				
+				Statement statement = con.createStatement();
 				String maxString = "SELECT MAX(PatientID) from Patient";
 				ResultSet rs = statement.executeQuery(maxString);
-				
 				rs.next();
 				Integer max = rs.getInt(1);
-				Integer num = max + 1;
+				Integer num = max+1;
 				
 				String SQL = "INSERT INTO Patients VALUES (?, ?, ?, ?, ?, ?)";
 				PreparedStatement pstmt = con.prepareStatement(SQL);
