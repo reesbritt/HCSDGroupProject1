@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
@@ -52,6 +51,9 @@ public class RegistrationPage extends JFrame {
 		JTextField surname = new JTextField(20);
 		JTextField phoneNo = new JTextField(11);
 		JTextField houseNo = new JTextField(4);
+		JTextField streetName = new JTextField(20);
+		JTextField districtName = new JTextField(20);
+		JTextField cityName = new JTextField(20);
 		JTextField postcode = new JTextField(11);
 		
 		
@@ -60,6 +62,7 @@ public class RegistrationPage extends JFrame {
 		healthPlan.addItem("NHS plan");
 		healthPlan.addItem("Maintenance plan");
 		healthPlan.addItem("Dental repair plan");
+		healthPlan.addItem("Oral health plan");
 		
 		JPanel formPanel = new JPanel();
 		formPanel.setLayout(new GridLayout(0,2));
@@ -79,6 +82,12 @@ public class RegistrationPage extends JFrame {
 		formPanel.add(phoneNo);
 		formPanel.add(new JLabel("House number"));
 		formPanel.add(houseNo);
+		formPanel.add(new JLabel("Street name"));
+		formPanel.add(streetName);
+		formPanel.add(new JLabel("District name"));
+		formPanel.add(districtName);
+		formPanel.add(new JLabel("City name"));
+		formPanel.add(cityName);
 		formPanel.add(new JLabel("Postcode"));
 		formPanel.add(postcode);
 		formPanel.add(new JLabel(""));
@@ -107,13 +116,19 @@ public class RegistrationPage extends JFrame {
 				String surnameValue=surname.getText().toString();
 				String phoneNoValue=phoneNo.getText().toString();
 				String healthValue=healthPlan.getSelectedItem().toString();
+				String streetValue=streetName.getText().toString();
+				String districtValue=districtName.getText().toString();
+				String cityValue=houseNo.getText().toString();
+				String houseNoValue=houseNo.getText().toString();
+				String postcodeValue=postcode.getText().toString();
 				
 				Integer treatmentCode = null;
 				String healthDate = null;		
 				if (healthValue != "None"){
 					if (healthValue == "NHS plan") {treatmentCode = 1;}
 					if (healthValue == "Maintenance plan") {treatmentCode = 2;}
-					if (healthValue == "Dental repair plan") {treatmentCode = 3;}
+					if (healthValue == "Dental repair plan") {treatmentCode = 4;}
+					if (healthValue == "Oral health plan") {treatmentCode = 3;}
 					
 					int year = Calendar.getInstance().get(Calendar.YEAR);
 					healthDate = (Integer.toString(year+1)+"-01-01");
@@ -138,7 +153,7 @@ public class RegistrationPage extends JFrame {
 				
 				String DB="jdbc:mysql://stusql.dcs.shef.ac.uk/team019?user=team019&password=6e84e2f3";
 				
-						
+				
 				try {
 					con = DriverManager.getConnection(DB);
 				} catch (SQLException e1) {
@@ -174,7 +189,7 @@ public class RegistrationPage extends JFrame {
 					pstmt.setString(3, yearOBValue+"-"+monthOBValue+"-"+dayOBValue);
 					pstmt.setString(4, firstNameValue);
 					pstmt.setString(5, surnameValue);
-					pstmt.setString(6, healthValue);
+					pstmt.setInt(6, treatmentCode);
 					pstmt.setString(7, phoneNoValue);
 					pstmt.setString(8, healthDate);
 					pstmt.executeUpdate();
@@ -184,6 +199,29 @@ public class RegistrationPage extends JFrame {
 					e1.printStackTrace();
 				}
 				
+				String addressSQL = "INSERT INTO Address VALUES (?, ?, ?, ?, ?, ?)";
+				try {
+					pstmt = con.prepareStatement(addressSQL);
+					pstmt.setString(1, houseNoValue);
+					pstmt.setString(2, streetValue);
+					pstmt.setString(3, districtValue);
+					pstmt.setString(4, cityValue);
+					pstmt.setString(5, postcodeValue);
+					pstmt.setInt(6, num);
+					
+					pstmt.executeUpdate();
+					pstmt.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				try {
+					con.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 	}
