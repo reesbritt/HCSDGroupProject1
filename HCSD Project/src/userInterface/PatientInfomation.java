@@ -74,6 +74,7 @@ public class PatientInfomation extends JFrame {
 				infoPanel.setVisible(false);
 				comboBox.setVisible(true);
 				confirm.setVisible(true);
+				bookappointment.setVisible(false);
 			}
 		});
 
