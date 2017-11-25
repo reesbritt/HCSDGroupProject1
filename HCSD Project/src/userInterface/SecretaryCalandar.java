@@ -19,6 +19,7 @@ public class SecretaryCalandar extends JFrame{
 	private static Border grayborder = BorderFactory.createLineBorder(Color.gray, 1);
 	private static Border margin = new EmptyBorder(15,50,15,50);
 	private static Box[] box = new Box[10];
+	private static BookAppointment appointmentScreen = new BookAppointment(); 
 	
 	//methods
 	//event listener for appointment booking slots highlight when hovered over 
@@ -85,13 +86,13 @@ public class SecretaryCalandar extends JFrame{
 		JPanel time = new JPanel();
 		time.setLayout(new BoxLayout(time,BoxLayout.PAGE_AXIS));
 		addToPanel(timeSlots, time); 
-		  
-		//create appointment slot boxes 
-		JPanel appointments = new JPanel();
-		appointments.setLayout(new GridLayout(3,3));
-		JLabel bookings[] = new JLabel[12];
-		editFields(bookings); 
-		addTextField(bookings, appointments); 
+//		  
+//		//create appointment slot boxes 
+//		JPanel appointments = new JPanel();
+//		appointments.setLayout(new GridLayout(3,3));
+//		JLabel bookings[] = new JLabel[20];
+//		editFields(bookings); 
+//		addTextField(bookings, appointments); 
 		//add event listener for appointment bookings 
 		
 		
@@ -102,13 +103,18 @@ public class SecretaryCalandar extends JFrame{
 		menuBar.add(menu); 
 		JMenuItem createAppointment = new JMenuItem("Create Appointment");
 		menu.add(createAppointment);
+		createAppointment.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				appointmentScreen.setVisible(true);
+			} 
+		});
 
         // add container for entire screen
 		Container contentPane = getContentPane(); 
 		contentPane.setLayout(new BorderLayout());
 		contentPane.add(days, BorderLayout.NORTH);
 		contentPane.add(time, BorderLayout.WEST); 
-		contentPane.add(appointments, BorderLayout.CENTER);
+		//contentPane.add(appointments, BorderLayout.CENTER);
 		contentPane.setBackground(Color.GRAY);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
@@ -117,6 +123,7 @@ public class SecretaryCalandar extends JFrame{
 	public static void main(String[] args){
 		SecretaryCalandar calandar = new SecretaryCalandar(); 
 		calandar.setVisible(true);
+		appointmentScreen.setVisible(false);
 	}
 	
 }
