@@ -199,6 +199,7 @@ public class RegistrationPage extends JFrame {
 					e1.printStackTrace();
 				}
 				
+
 				String addressSQL = "INSERT INTO Address VALUES (?, ?, ?, ?, ?, ?)";
 				try {
 					pstmt = con.prepareStatement(addressSQL);
@@ -222,6 +223,7 @@ public class RegistrationPage extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				dispose();
 			}
 		});
 	}
