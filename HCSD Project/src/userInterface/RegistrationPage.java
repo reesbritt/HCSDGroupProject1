@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 
 public class RegistrationPage extends JFrame {
 	 
@@ -40,16 +43,23 @@ public class RegistrationPage extends JFrame {
 		}
 		
 		JComboBox yearOB = new JComboBox();
-		//add all days of the month 
+		//add all days of the month title
 		for (int i = 1; i<118;i++){
 			yearOB.addItem(1900+i);
 		}
 		
 		JTextField firstName = new JTextField(20);
 		JTextField surname = new JTextField(20);
+		JTextField phoneNo = new JTextField(11);
+		JTextField houseNo = new JTextField(4);
+		JTextField postcode = new JTextField(11);
 		
-		JRadioButton healthPlan = new JRadioButton("Health plan?");
 		
+		JComboBox healthPlan = new JComboBox();
+		healthPlan.addItem("None");
+		healthPlan.addItem("NHS plan");
+		healthPlan.addItem("Maintenance plan");
+		healthPlan.addItem("Dental repair plan");
 		
 		JPanel formPanel = new JPanel();
 		formPanel.setLayout(new GridLayout(0,2));
@@ -65,6 +75,12 @@ public class RegistrationPage extends JFrame {
 		formPanel.add(monthOB);
 		formPanel.add(new JLabel("Year of birth"));
 		formPanel.add(yearOB);
+		formPanel.add(new JLabel("Phone number"));
+		formPanel.add(phoneNo);
+		formPanel.add(new JLabel("House number"));
+		formPanel.add(houseNo);
+		formPanel.add(new JLabel("Postcode"));
+		formPanel.add(postcode);
 		formPanel.add(new JLabel(""));
 		formPanel.add(healthPlan);
 		
@@ -89,45 +105,85 @@ public class RegistrationPage extends JFrame {
 				String yearOBValue = yearOB.getSelectedItem().toString();
 				String firstNameValue=firstName.getText().toString();
 				String surnameValue=surname.getText().toString();
-				String healthPlanValue = "N";
-						
-				if (healthPlan.isSelected()){
-					healthPlanValue = "Y";
+				String phoneNoValue=phoneNo.getText().toString();
+				String healthValue=healthPlan.getSelectedItem().toString();
+				
+				Integer treatmentCode = null;
+				String healthDate = null;		
+				if (healthValue != "None"){
+					if (healthValue == "NHS plan") {treatmentCode = 1;}
+					if (healthValue == "Maintenance plan") {treatmentCode = 2;}
+					if (healthValue == "Dental repair plan") {treatmentCode = 3;}
+					
+					int year = Calendar.getInstance().get(Calendar.YEAR);
+					healthDate = (Integer.toString(year+1)+"-01-01");
 				}
+				
 				
 				Connection con = null;
 				
 				try {
-					   Class.forName("com.mysql.jdbc.Driver");
+					Class.forName("com.mysql.jdbc.Driver").newInstance();
 					}
 					catch(ClassNotFoundException ex) {
 					   System.out.println("Error: unable to load driver class!");
 					   System.exit(1);
+					} catch (InstantiationException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IllegalAccessException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 				
-				String URL = "jdbc:mysql://localhost/database";
-				String USER = "username";
-				String PASS = "password";
+				String DB="jdbc:mysql://stusql.dcs.shef.ac.uk/team019?user=team019&password=6e84e2f3";
+				
 						
-				con = DriverManager.getConnection(URL, USER, PASS);
+				try {
+					con = DriverManager.getConnection(DB);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
-				Statement statement = con.createStatement();
-				String maxString = "SELECT MAX(PatientID) from Patient";
-				ResultSet rs = statement.executeQuery(maxString);
-				rs.next();
-				Integer max = rs.getInt(1);
-				Integer num = max+1;
+				Statement statement;
+				String maxString;
+				ResultSet rs;
+				Integer max;
+				Integer num = 0;
 				
-				String SQL = "INSERT INTO Patients VALUES (?, ?, ?, ?, ?, ?)";
-				PreparedStatement pstmt = con.prepareStatement(SQL);
-				pstmt.setInt(1, num);
-				pstmt.setString(2, titleValue);
-				pstmt.setString(3, dayOBValue+"/"+monthOBValue+"/"+yearOBValue);
-				pstmt.setString(4, firstNameValue);
-				pstmt.setString(5, surnameValue);
-				pstmt.setString(6, healthPlanValue);
-				pstmt.executeUpdate();
-				pstmt.close();
+				try {
+					statement = con.createStatement();
+					maxString = "SELECT MAX(PatientID) from Patient";
+					rs = statement.executeQuery(maxString);
+					rs.next();
+					max = rs.getInt(1);
+					num = max+1;
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+				String SQL = "INSERT INTO Patient VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+				PreparedStatement pstmt;
+				try {
+					pstmt = con.prepareStatement(SQL);
+					pstmt.setInt(1, num);
+					pstmt.setString(2, titleValue);
+					pstmt.setString(3, yearOBValue+"-"+monthOBValue+"-"+dayOBValue);
+					pstmt.setString(4, firstNameValue);
+					pstmt.setString(5, surnameValue);
+					pstmt.setString(6, healthValue);
+					pstmt.setString(7, phoneNoValue);
+					pstmt.setString(8, healthDate);
+					pstmt.executeUpdate();
+					pstmt.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}
 		});
 	}
