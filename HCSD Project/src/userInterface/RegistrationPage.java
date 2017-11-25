@@ -184,6 +184,7 @@ public class RegistrationPage extends JFrame {
 					e1.printStackTrace();
 				}
 				
+				dispose();
 			}
 		});
 	}
