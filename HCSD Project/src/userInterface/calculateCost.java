@@ -15,7 +15,7 @@ public class calculateCost {
 	private static final int oral = 3;				// 2 checkup, 4 hygiene
 	private static final int dental = 4;			// 2 checkup, 2 hygiene, 2 repairs
 	
-	public int calculate(Integer patientID,Integer costTreatmentID ) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	public static int calculate(Integer patientID,Integer costTreatmentID ) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		
 		Connection con = null;
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -97,7 +97,7 @@ public class calculateCost {
 		else {return 0;}
 	}
 	
-	public int repairCost(int treatmentID, int silverCost, int whiteCost, int goldCost) {
+	public static int repairCost(int treatmentID, int silverCost, int whiteCost, int goldCost) {
 		if (treatmentID == silver) {return silverCost;}
 		else if (treatmentID == white) {return whiteCost;}
 		else if (treatmentID == gold) {return goldCost;}

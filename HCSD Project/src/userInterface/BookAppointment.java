@@ -172,10 +172,19 @@ public class BookAppointment extends JFrame {
 					pstmt.setString(6, end);
 					pstmt.setInt(7, t1Code);
 					pstmt.setInt(8, t2Code);
-					pstmt.setInt(9, 100);
+					pstmt.setInt(9, calculateCost.calculate(patientID,t1Code));
 					pstmt.executeUpdate();
 					pstmt.close();
 				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (InstantiationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IllegalAccessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
