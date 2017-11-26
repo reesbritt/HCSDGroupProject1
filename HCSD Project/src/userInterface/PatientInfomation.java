@@ -120,7 +120,7 @@ public class PatientInfomation extends JFrame {
 		
 		
 		
-		//add button to
+		//add button to return to home page 
 		JButton back = new JButton("Back");
 		
 		back.addActionListener(new ActionListener(){
