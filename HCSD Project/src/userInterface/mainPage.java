@@ -52,7 +52,7 @@ public class mainPage extends JFrame {
 		
 		calender.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				SecretaryCalandar.main(new String[] {});
+				SecretaryCalendar.main(new String[] {});
 			}
 		});
 		
