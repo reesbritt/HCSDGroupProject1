@@ -11,7 +11,7 @@ public class TreatmentReview extends JFrame {
 	
 	//methods
 	
-	public TreatmentReview() {
+	public TreatmentReview()  {
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension screenDimensions = toolkit.getScreenSize();
 		setTitle("Treatment review ");
@@ -26,6 +26,53 @@ public class TreatmentReview extends JFrame {
 		panel.add(label);
 		panel.add(box);
 		panel.add(confirm);
+		
+		box.setEditable(true);
+		Connection con = null;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			}
+			catch(ClassNotFoundException ex) {
+			   System.out.println("Error: unable to load driver class!");
+			   System.exit(1);
+			} catch (InstantiationException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IllegalAccessException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		
+		String DB="jdbc:mysql://stusql.dcs.shef.ac.uk/team019?user=team019&password=6e84e2f3";
+		
+		
+		try {
+			con = DriverManager.getConnection(DB);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		Statement statement;
+		String nameQuery;
+		ResultSet rs;
+		
+		try {
+			statement = con.createStatement();
+			nameQuery = "SELECT Patient.Firstname, Patient.Surname, Address.Postcode from Patient INNER JOIN Address ON Patient.PatientID=Address.PatientID";
+			rs = statement.executeQuery(nameQuery);
+			
+			while (rs.next()) { 
+				
+				box.addItem(rs.getString("Patient.Firstname")+" "+rs.getString("Patient.Surname")+"("+rs.getString("Address.Postcode")+")"); 
+				
+				}
+			con.close();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		//Panel displaying all the patients treatment information
 		JPanel infoPanel = new JPanel();
 		infoPanel.setLayout(new GridLayout(0,2));
