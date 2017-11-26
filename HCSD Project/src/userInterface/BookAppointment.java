@@ -133,16 +133,17 @@ public class BookAppointment extends JFrame {
 				Statement statement;
 				String maxString;
 				ResultSet rs;
-				Integer max;
+				Integer patientID;
 				Integer num = 0;
 				Integer appointmentNum =0;
 				try {
-					statement = con.createStatement();
-					maxString = "SELECT PatientID FROM Patient WHERE Firstname='" + name+"'"  ;
+					statement  = con.createStatement();
+					
+					maxString = "SELECT Patient.PatientID FROM Patient WHERE Patient.Firstname=" + name + "AND Address.Postcode= "+address+ "INNER JOIN Address ON Patient.PatientID=Address.PatientID"  ;
 					rs = statement.executeQuery(maxString);
 					rs.next();
-					max = rs.getInt(1);
-					num = max+1;
+					patientID = rs.getInt(1);
+					
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -165,7 +166,7 @@ public class BookAppointment extends JFrame {
 					pstmt = con.prepareStatement(SQL);
 					pstmt.setInt(1, appointmentNum);
 					pstmt.setInt(2, p1Code);
-					pstmt.setInt(3, num);
+					pstmt.setInt(3, patientID);
 					pstmt.setString(4, yearVal+"-" +monthVal+"-"+dayValue);
 					pstmt.setString(5,start);
 					pstmt.setString(6, end);
