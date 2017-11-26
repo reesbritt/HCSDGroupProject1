@@ -133,12 +133,12 @@ public class BookAppointment extends JFrame {
 				Statement statement;
 				String maxString;
 				ResultSet rs;
-				Integer patientID;
+				Integer patientID = 0;
 				Integer num = 0;
 				Integer appointmentNum =0;
+				Integer max = 0;
 				try {
 					statement  = con.createStatement();
-					
 					maxString = "SELECT Patient.PatientID FROM Patient WHERE Patient.Firstname=" + name + "AND Address.Postcode= "+address+ "INNER JOIN Address ON Patient.PatientID=Address.PatientID"  ;
 					rs = statement.executeQuery(maxString);
 					rs.next();
