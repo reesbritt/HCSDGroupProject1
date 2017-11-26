@@ -9,7 +9,7 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder; 
 
-public class SecretaryCalandar extends JFrame{ 
+public class SecretaryCalendar extends JFrame{ 
     //variables 
 	private static Color bC = new Color( 0, 98, 139);
 	private static Color silver = new Color(192,192,192);
@@ -20,8 +20,8 @@ public class SecretaryCalandar extends JFrame{
 	private static Border margin = new EmptyBorder(15,50,15,50);
 	private static Box[] box = new Box[10];
 	private static BookAppointment appointmentScreen = new BookAppointment(); 
-	private static SecretaryCalandar doctorsAppointment = new SecretaryCalandar();
-	private static SecretaryCalandar hygienistAppointment = new SecretaryCalandar();
+	private static SecretaryCalendar doctorsAppointment = new SecretaryCalendar();
+	private static SecretaryCalendar hygienistAppointment = new SecretaryCalendar();
 	//methods
 	private JPanel makePanel(String text) {
 		// TODO Auto-generated method stub
@@ -71,10 +71,10 @@ public class SecretaryCalandar extends JFrame{
 		return panel;
 	}
 	
-	public SecretaryCalandar(){
+	public SecretaryCalendar(){
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension screenDimensions = toolkit.getScreenSize();
-		setTitle("Weekly calandar");
+		setTitle("Weekly calendar");
 		setSize(screenDimensions.width/2, screenDimensions.height/2); 
 		setLocation(new Point(screenDimensions.width/4, screenDimensions.height/4));
 	    String daysOfWeek[] = {"         ","Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
@@ -94,13 +94,13 @@ public class SecretaryCalandar extends JFrame{
 		JPanel time = new JPanel();
 		time.setLayout(new BoxLayout(time,BoxLayout.PAGE_AXIS));
 		addToPanel(timeSlots, time); 
-//		  
-//		//create appointment slot boxes 
-//		JPanel appointments = new JPanel();
-//		appointments.setLayout(new GridLayout(3,3));
-//		JLabel bookings[] = new JLabel[20];
-//		editFields(bookings); 
-//		addTextField(bookings, appointments); 
+		  
+		//create appointment slot boxes 
+		JPanel appointments = new JPanel();
+		appointments.setLayout(new GridLayout(3,3));
+		JLabel bookings[] = new JLabel[20];
+		editFields(bookings); 
+		addTextField(bookings, appointments); 
 		//add event listener for appointment bookings 
 		
 		
@@ -118,10 +118,9 @@ public class SecretaryCalandar extends JFrame{
 		});
 		//ADD SQL STATEMENTS TO GET APPOINTMENTS FROM DATABASE 
 		JTabbedPane tabbedPane = new JTabbedPane();
-		JComponent tabPanel = makePanel("Panel #1");
-		tabbedPane.addTab("Doctors Appoinments",tabPanel);
-		JComponent tab2Panel = makePanel("Panel #2");
-		tabbedPane.addTab("Hygienist Appointments",tab2Panel);
+		tabbedPane.addTab("Hygienist Appointments", makePanel("tab 1"));
+		tabbedPane.addTab("Doctors Appointments ", makePanel("tab 2"));
+		
         // add container for entire screen
 		Container contentPane = getContentPane(); 
 		contentPane.setLayout(new BorderLayout());
@@ -131,13 +130,13 @@ public class SecretaryCalandar extends JFrame{
 		//contentPane.add(appointments, BorderLayout.CENTER);
 		contentPane.setBackground(Color.GRAY);
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
 		
 	}
 	
 	public static void main(String[] args){
-		SecretaryCalandar calandar = new SecretaryCalandar(); 
-		calandar.setVisible(true);
+		SecretaryCalendar calendar = new SecretaryCalendar(); 
+		calendar.setVisible(true);
 		appointmentScreen.setVisible(false);
 	}
 	
