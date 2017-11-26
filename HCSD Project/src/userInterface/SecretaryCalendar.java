@@ -3,11 +3,14 @@ package userInterface;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.sql.*;
 import java.awt.*; 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder; 
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent; 
+import javax.swing.event.ChangeListener;
 
 public class SecretaryCalendar extends JFrame{ 
     //variables 
@@ -116,10 +119,47 @@ public class SecretaryCalendar extends JFrame{
 				appointmentScreen.setVisible(true);
 			} 
 		});
-		//ADD SQL STATEMENTS TO GET APPOINTMENTS FROM DATABASE 
+		
+		//ADD TABBED PANES TO SWITCH BETWEEN APPOINTMENTS 
+		JPanel p = new JPanel();
+		p.setLayout(new FlowLayout());
+		
 		JTabbedPane tabbedPane = new JTabbedPane();
-		tabbedPane.addTab("Hygienist Appointments", makePanel("tab 1"));
-		tabbedPane.addTab("Doctors Appointments ", makePanel("tab 2"));
+		tabbedPane.addTab("Hygienist Appointments", new JPanel());
+		tabbedPane.addTab("Doctors Appointments ", new JPanel());
+		int tab = tabbedPane.getSelectedIndex(); //get current tab, first tab = 0, second = 1 , etc
+		tabbedPane.addChangeListener(new ChangeListener() {
+			public void stateChanged( ChangeEvent e) {
+				Connection con = null;
+				
+				try {
+					Class.forName("com.mysql.jdbc.Driver").newInstance();
+					}
+					catch(ClassNotFoundException ex) {
+					   System.out.println("Error: unable to load driver class!");
+					   System.exit(1);
+					} catch (InstantiationException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IllegalAccessException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				
+				String DB="jdbc:mysql://stusql.dcs.shef.ac.uk/team019?user=team019&password=6e84e2f3";
+				
+				
+				try {
+					con = DriverManager.getConnection(DB);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				Statement statement; 
+				//add SQL QUERIES HERE TO ADD EITHER SECRETARY OR DOCTORS APPOINTMENTS
+				//IF TAB == 0 THEN SHOW SECRETARY APPOINTMENTS ELSE SHOW DOCTORS APPOINTMENTS
+			}
+		});
 		
         // add container for entire screen
 		Container contentPane = getContentPane(); 

@@ -136,11 +136,9 @@ public class BookAppointment extends JFrame {
 				Integer max;
 				Integer num = 0;
 				Integer appointmentNum =0;
-				String n = name; 
-				String a = address; 
 				try {
 					statement = con.createStatement();
-					maxString = "SELECT PatientID from Patient WHERE Firstname='" + n+"'"  ;
+					maxString = "SELECT PatientID FROM Patient WHERE Firstname='" + name+"'"  ;
 					rs = statement.executeQuery(maxString);
 					rs.next();
 					max = rs.getInt(1);
