@@ -84,10 +84,12 @@ public class PatientInfomation extends JFrame {
 		
 		try {
 			statement = con.createStatement();
-			nameQuery = "SELECT * from Patient";
+			nameQuery = "SELECT Patient.Firstname, Patient.Surname, Address.Postcode from Patient INNER JOIN Address ON Patient.PatientID=Address.PatientID";
 			rs = statement.executeQuery(nameQuery);
+			
 			while (rs.next()) { 
-				comboBox.addItem(rs.getString("Firstname")+" "+rs.getString("Surname")); 
+				
+				comboBox.addItem(rs.getString("Patient.Firstname")+" "+rs.getString("Patient.Surname")+"("+rs.getString("Address.Postcode")+")"); 
 				
 				}
 			con.close();
