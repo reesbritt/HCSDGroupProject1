@@ -8,7 +8,6 @@ import java.util.Calendar;
 
 import javax.swing.*;
 
-import com.mysql.jdbc.PreparedStatement;
 public class BookAppointment extends JFrame {
 	private static String[] times = new String[48]; 
 	public BookAppointment(){
@@ -181,7 +180,12 @@ public class BookAppointment extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+				try {
+					con.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				bookAgain.setVisible(true);
 				message.setVisible(true);
 				appointmentPanel.setVisible(false);
