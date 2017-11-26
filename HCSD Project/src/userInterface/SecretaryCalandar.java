@@ -20,8 +20,16 @@ public class SecretaryCalandar extends JFrame{
 	private static Border margin = new EmptyBorder(15,50,15,50);
 	private static Box[] box = new Box[10];
 	private static BookAppointment appointmentScreen = new BookAppointment(); 
-	
+	private static SecretaryCalandar doctorsAppointment = new SecretaryCalandar();
+	private static SecretaryCalandar hygienistAppointment = new SecretaryCalandar();
 	//methods
+	private JPanel makePanel(String text) {
+		// TODO Auto-generated method stub
+		JPanel panel = new JPanel();
+		panel.add(new Label(text)); 
+		panel.setLayout(new GridLayout(1,1));
+		return panel;
+	}
 	//event listener for appointment booking slots highlight when hovered over 
 
 	//take an array of J Labels, give them the same design
@@ -108,18 +116,25 @@ public class SecretaryCalandar extends JFrame{
 				appointmentScreen.setVisible(true);
 			} 
 		});
-
+		//ADD SQL STATEMENTS TO GET APPOINTMENTS FROM DATABASE 
+		JTabbedPane tabbedPane = new JTabbedPane();
+		JComponent tabPanel = makePanel("Panel #1");
+		tabbedPane.addTab("Doctors Appoinments",tabPanel);
+		JComponent tab2Panel = makePanel("Panel #2");
+		tabbedPane.addTab("Hygienist Appointments",tab2Panel);
         // add container for entire screen
 		Container contentPane = getContentPane(); 
 		contentPane.setLayout(new BorderLayout());
 		contentPane.add(days, BorderLayout.NORTH);
 		contentPane.add(time, BorderLayout.WEST); 
+		contentPane.add(tabbedPane, BorderLayout.SOUTH);
 		//contentPane.add(appointments, BorderLayout.CENTER);
 		contentPane.setBackground(Color.GRAY);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		
 	}
+	
 	public static void main(String[] args){
 		SecretaryCalandar calandar = new SecretaryCalandar(); 
 		calandar.setVisible(true);
