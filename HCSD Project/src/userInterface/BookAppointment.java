@@ -40,15 +40,19 @@ public class BookAppointment extends JFrame {
 		JLabel t1 = new JLabel("Treatment 1");
 		JComboBox t1Box = new JComboBox();
 		t1Box.addItem("None");
-		t1Box.addItem("Teeth clean");
-		t1Box.addItem("Regular check up");
-		t1Box.addItem("Remedial treatment");
+		t1Box.addItem("Hygiene Visit");
+		t1Box.addItem("Check up");
+		t1Box.addItem("Silver filling");
+		t1Box.addItem("White resin filling");
+		t1Box.addItem("Gold Crown");
 		JLabel t2 = new JLabel("Treatment 2");
 		JComboBox t2Box = new JComboBox();
 		t2Box.addItem("None");
-		t2Box.addItem("Teeth clean");
-		t2Box.addItem("Regular check up");
-		t2Box.addItem("Remedial treatment");
+		t2Box.addItem("Hygiene Visit");
+		t2Box.addItem("Check up");
+		t2Box.addItem("Silver filling");
+		t2Box.addItem("White resin filling");
+		t2Box.addItem("Gold Crown");
 		JLabel message = new JLabel("Appointment has been booked");
 		message.setVisible(false);
 		JButton bookAgain = new JButton("Back");
@@ -89,20 +93,16 @@ public class BookAppointment extends JFrame {
 				String end = etimes.getSelectedItem().toString();
 				String address = postcode.getText();
 				String name = firstname.getText();
-				Integer t1Code = null;
-				Integer t2Code = null;
-				Integer p1Code = null; //dentist code == 1
-				Integer p2Code= null; //hygenist code == 2
+				Integer treatmentCode = null;
+				Integer partnerCode = null; //dentist code == 1
+				
 				if (t1Value != "None") {
-					if (t1Value== "Teeth clean"); {t1Code = 1; p1Code = 2;}
-					if (t1Value=="Regular check up");{t1Code = 2; p1Code = 1;}
-					if (t1Value=="Remedial treatment");{t1Code = 3; p1Code =1;}
+					if (t1Value== "Check up"); {treatmentCode = 1; partnerCode = 2;}
+					if (t1Value=="Hygiene Visit");{treatmentCode = 2; partnerCode = 2;}
+					if (t1Value=="Silver filling");{treatmentCode = 3; partnerCode =1;}
+					if (t1Value=="White resin filling");{treatmentCode =4; partnerCode=1;}
+					if (t1Value =="Gold Crown"); {treatmentCode=5; partnerCode=1;}
 					
-				}
-				if (t2Value != "None") {
-					if (t2Value == "Teeth clean"); {t2Code = 1; p2Code = 2;}
-					if (t2Value == "Regular check up");{t2Code = 2;p2Code =1;}
-					if (t2Value == "Remedial treatment");{t2Code = 3;p2Code =1;}
 				}
 				//connect to database 
 				Connection con = null;
