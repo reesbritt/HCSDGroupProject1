@@ -157,12 +157,23 @@ public class BookAppointment extends JFrame {
 					rs.next();
 					max = rs.getInt(1);
 					appointmentNum = max+1;
+					
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
 				String SQL = "INSERT INTO Appointment VALUES (?,?,?,?,?,?,?,?)";
 				java.sql.PreparedStatement pstmt;
+				int calculatedCost = 0;
+				
+				try {
+					calculatedCost = calculateCost.calculate(patientID,treatmentCode);
+				} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				
 				try {
 					pstmt = con.prepareStatement(SQL);
 					pstmt.setInt(1, appointmentNum);
@@ -172,28 +183,42 @@ public class BookAppointment extends JFrame {
 					pstmt.setString(5,start);
 					pstmt.setString(6, end);
 					pstmt.setInt(7, treatmentCode);
-					pstmt.setInt(8, calculateCost.calculate(patientID,treatmentCode));
+					pstmt.setInt(8, calculatedCost);
 					pstmt.executeUpdate();
 					pstmt.close();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				} catch (InstantiationException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IllegalAccessException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				}
+				
+				Statement maxStatement;
 				try {
+					maxStatement = con.createStatement();
+					maxString = "SELECT MAX(ReceiptID) from Receipt";
+					rs = maxStatement.executeQuery(maxString);
+					rs.next();
+					max = rs.getInt(1);
+					int receiptNum = max+1;
+					
+				
+					String receiptSQL = "INSERT INTO Receipt VALUES (?,?,?,?)";
+					java.sql.PreparedStatement receiptPS;
+					receiptPS = con.prepareStatement(receiptSQL);
+					receiptPS.setInt(1, receiptNum);
+					receiptPS.setInt(2, appointmentNum);
+					receiptPS.setInt(3, calculatedCost);
+					receiptPS.setBoolean(4, false);
+					receiptPS.executeUpdate();
+					receiptPS.close();
 					con.close();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
+				
+				
+				
 				bookAgain.setVisible(true);
 				message.setVisible(true);
 				appointmentPanel.setVisible(false);
