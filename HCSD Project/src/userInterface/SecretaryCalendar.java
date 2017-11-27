@@ -91,7 +91,7 @@ public class SecretaryCalendar extends JFrame{
 		
 		//Create timeslots for appointments 9,5
 		String times[] = {"9am  ", "10am","11am", "12pm", "1pm  ", "2pm  ", "3pm  ", "4pm  "};
-		JLabel timeSlots[] = new JLabel[7];
+		JLabel timeSlots[] = new JLabel[8];
 		designLabels(timeSlots, times); 
 		
 		JPanel time = new JPanel();
@@ -100,10 +100,9 @@ public class SecretaryCalendar extends JFrame{
 		  
 		//create appointment slot boxes 
 		JPanel appointments = new JPanel();
-		appointments.setLayout(new GridLayout(3,3));
-		JLabel bookings[] = new JLabel[20];
-		editFields(bookings); 
-		addTextField(bookings, appointments); 
+		appointments.setLayout(new BorderLayout());
+		JTextField field = new JTextField();
+		appointments.add(field);
 		//add event listener for appointment bookings 
 		
 		
@@ -127,9 +126,9 @@ public class SecretaryCalendar extends JFrame{
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Hygienist Appointments", new JPanel());
 		tabbedPane.addTab("Doctors Appointments ", new JPanel());
-		int tab = tabbedPane.getSelectedIndex(); //get current tab, first tab = 0, second = 1 , etc
 		tabbedPane.addChangeListener(new ChangeListener() {
 			public void stateChanged( ChangeEvent e) {
+				int tab = tabbedPane.getSelectedIndex();
 				Connection con = null;
 				
 				try {
@@ -155,9 +154,47 @@ public class SecretaryCalendar extends JFrame{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				Statement statement; 
-				//add SQL QUERIES HERE TO ADD EITHER SECRETARY OR DOCTORS APPOINTMENTS
+				Statement statement;
+				String maxString;
+				ResultSet rs;
+				if (tab == 0) {
+					try {
+						statement  = con.createStatement();
+						maxString = "SELECT * FROM Appointment WHERE PartnerID = 1 ";
+						rs = statement.executeQuery(maxString);
+							
+							
+							
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					
+				}
+				if (tab == 1) {
+					try {
+						statement  = con.createStatement();
+						maxString = "SELECT * FROM Appointment WHERE PartnerID = 2";
+						rs = statement.executeQuery(maxString);
+
+							
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					
+						}
+			
+				
+				//add SQL QUERIES HERE TO ADD EITHER SECRETARY OR DENTIST APPOINTMENTS
 				//IF TAB == 0 THEN SHOW SECRETARY APPOINTMENTS ELSE SHOW DOCTORS APPOINTMENTS
+				}
+				try {
+					con.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		
@@ -167,6 +204,7 @@ public class SecretaryCalendar extends JFrame{
 		contentPane.add(days, BorderLayout.NORTH);
 		contentPane.add(time, BorderLayout.WEST); 
 		contentPane.add(tabbedPane, BorderLayout.SOUTH);
+		contentPane.add(field, BorderLayout.CENTER);
 		//contentPane.add(appointments, BorderLayout.CENTER);
 		contentPane.setBackground(Color.GRAY);
 		
@@ -181,3 +219,76 @@ public class SecretaryCalendar extends JFrame{
 	}
 	
 }
+
+//Connection con = null;
+//
+//try {
+//	Class.forName("com.mysql.jdbc.Driver").newInstance();
+//	}
+//	catch(ClassNotFoundException ex) {
+//	   System.out.println("Error: unable to load driver class!");
+//	   System.exit(1);
+//	} catch (InstantiationException e1) {
+//		// TODO Auto-generated catch block
+//		e1.printStackTrace();
+//	} catch (IllegalAccessException e1) {
+//		// TODO Auto-generated catch block
+//		e1.printStackTrace();
+//	}
+//
+//String DB="jdbc:mysql://stusql.dcs.shef.ac.uk/team019?user=team019&password=6e84e2f3";
+//
+//if (tab ==0) {	
+//	try {
+//		con = DriverManager.getConnection(DB);
+//	} catch (SQLException e1) {
+//		// TODO Auto-generated catch block
+//		e1.printStackTrace();
+//	}
+//	Statement statement;
+//	try {
+//		statement = con.createStatement();
+//	} catch (SQLException e2) {
+//		// TODO Auto-generated catch block
+//		e2.printStackTrace();
+//	}
+//	String maxString;
+//	ResultSet rs;
+//	try {
+//		statement  = con.createStatement();
+//		maxString = "SELECT * FROM Appointment WHERE PartnerID = 1";
+//				
+//		rs = statement.executeQuery(maxString);
+//		
+//	} catch (SQLException e1) {
+//		// TODO Auto-generated catch block
+//		e1.printStackTrace();
+//	} 
+//}else if (tab == 1) {
+//	try {
+//		con = DriverManager.getConnection(DB);
+//	} catch (SQLException e1) {
+//		// TODO Auto-generated catch block
+//		e1.printStackTrace();
+//	}
+//	Statement statement;
+//	try {
+//		statement = con.createStatement();
+//	} catch (SQLException e2) {
+//		// TODO Auto-generated catch block
+//		e2.printStackTrace();
+//	}
+//	String maxString;
+//	ResultSet rs;
+//	try {
+//		statement  = con.createStatement();
+//		maxString = "SELECT * FROM Appointment WHERE PartnerID = 2";
+//				
+//		rs = statement.executeQuery(maxString);
+//		
+//	} catch (SQLException e1) {
+//		// TODO Auto-generated catch block
+//		e1.printStackTrace();
+//	} 
+//}
+
