@@ -17,12 +17,14 @@ public class PatientMenu extends JFrame{
 		JButton info = new JButton("View patient information");
 		JButton subscribe = new JButton("Subscribe patient to a healthcare plan");
 		JButton appointment = new JButton("Book appointment");
+		JButton deleteAppointment = new JButton("Delete appointment");
 		JButton home = new JButton("Home");
 		
 		buttonPanel.add(info);
 		buttonPanel.add(subscribe);
 		buttonPanel.add(appointment);
 		buttonPanel.add(home);
+		buttonPanel.add(deleteAppointment);
 		//event listeners
 		info.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
@@ -44,6 +46,12 @@ public class PatientMenu extends JFrame{
 				mainPage.main(new String[] {});
 			}
 		});
+		deleteAppointment.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DeleteAppointment.main(new String[] {});
+			}
+		});
+		
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		contentPane.add(buttonPanel, BorderLayout.CENTER);

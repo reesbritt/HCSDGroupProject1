@@ -57,9 +57,9 @@ public class SecretaryCalendar extends JFrame{
 		}
 		return panel; 
 	}
-	public JLabel[] editFields (JLabel[] fields){
+	public JLabel[] editLabels (JLabel[] fields){
 		for (int i = 0;i< fields.length; i++){
-			fields[i] = new JLabel("hello");
+			fields[i] = new JLabel(" ");
 			fields[i].setOpaque(true);
 			fields[i].setForeground(silver);
 			fields[i].setBorder(grayborder);
@@ -99,10 +99,14 @@ public class SecretaryCalendar extends JFrame{
 		addToPanel(timeSlots, time); 
 		  
 		//create appointment slot boxes 
+		JLabel[] aLabels = new JLabel[40];
+		for(int i =0; i<aLabels.length;i++) {
+			aLabels[i] = new JLabel();
+		}
 		JPanel appointments = new JPanel();
-		appointments.setLayout(new BorderLayout());
-		JTextField field = new JTextField();
-		appointments.add(field);
+		appointments.setLayout(new GridLayout(8,5));
+		editLabels(aLabels);
+		addToPanel(aLabels,appointments);
 		//add event listener for appointment bookings 
 		
 		
@@ -129,6 +133,7 @@ public class SecretaryCalendar extends JFrame{
 		tabbedPane.addChangeListener(new ChangeListener() {
 			public void stateChanged( ChangeEvent e) {
 				int tab = tabbedPane.getSelectedIndex();
+				int i = 0; 
 				Connection con = null;
 				
 				try {
@@ -162,7 +167,7 @@ public class SecretaryCalendar extends JFrame{
 						statement  = con.createStatement();
 						maxString = "SELECT * FROM Appointment WHERE PartnerID = 1 ";
 						rs = statement.executeQuery(maxString);
-							
+
 							
 							
 					} catch (SQLException e1) {
@@ -177,6 +182,7 @@ public class SecretaryCalendar extends JFrame{
 						statement  = con.createStatement();
 						maxString = "SELECT * FROM Appointment WHERE PartnerID = 2";
 						rs = statement.executeQuery(maxString);
+
 
 							
 					} catch (SQLException e1) {
@@ -204,7 +210,7 @@ public class SecretaryCalendar extends JFrame{
 		contentPane.add(days, BorderLayout.NORTH);
 		contentPane.add(time, BorderLayout.WEST); 
 		contentPane.add(tabbedPane, BorderLayout.SOUTH);
-		contentPane.add(field, BorderLayout.CENTER);
+		contentPane.add(appointments, BorderLayout.CENTER);
 		//contentPane.add(appointments, BorderLayout.CENTER);
 		contentPane.setBackground(Color.GRAY);
 		
@@ -220,75 +226,5 @@ public class SecretaryCalendar extends JFrame{
 	
 }
 
-//Connection con = null;
-//
-//try {
-//	Class.forName("com.mysql.jdbc.Driver").newInstance();
-//	}
-//	catch(ClassNotFoundException ex) {
-//	   System.out.println("Error: unable to load driver class!");
-//	   System.exit(1);
-//	} catch (InstantiationException e1) {
-//		// TODO Auto-generated catch block
-//		e1.printStackTrace();
-//	} catch (IllegalAccessException e1) {
-//		// TODO Auto-generated catch block
-//		e1.printStackTrace();
-//	}
-//
-//String DB="jdbc:mysql://stusql.dcs.shef.ac.uk/team019?user=team019&password=6e84e2f3";
-//
-//if (tab ==0) {	
-//	try {
-//		con = DriverManager.getConnection(DB);
-//	} catch (SQLException e1) {
-//		// TODO Auto-generated catch block
-//		e1.printStackTrace();
-//	}
-//	Statement statement;
-//	try {
-//		statement = con.createStatement();
-//	} catch (SQLException e2) {
-//		// TODO Auto-generated catch block
-//		e2.printStackTrace();
-//	}
-//	String maxString;
-//	ResultSet rs;
-//	try {
-//		statement  = con.createStatement();
-//		maxString = "SELECT * FROM Appointment WHERE PartnerID = 1";
-//				
-//		rs = statement.executeQuery(maxString);
-//		
-//	} catch (SQLException e1) {
-//		// TODO Auto-generated catch block
-//		e1.printStackTrace();
-//	} 
-//}else if (tab == 1) {
-//	try {
-//		con = DriverManager.getConnection(DB);
-//	} catch (SQLException e1) {
-//		// TODO Auto-generated catch block
-//		e1.printStackTrace();
-//	}
-//	Statement statement;
-//	try {
-//		statement = con.createStatement();
-//	} catch (SQLException e2) {
-//		// TODO Auto-generated catch block
-//		e2.printStackTrace();
-//	}
-//	String maxString;
-//	ResultSet rs;
-//	try {
-//		statement  = con.createStatement();
-//		maxString = "SELECT * FROM Appointment WHERE PartnerID = 2";
-//				
-//		rs = statement.executeQuery(maxString);
-//		
-//	} catch (SQLException e1) {
-//		// TODO Auto-generated catch block
-//		e1.printStackTrace();
-//	} 
-//}
+
 

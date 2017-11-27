@@ -17,7 +17,7 @@ public class PatientInfomation extends JFrame {
 		setTitle("Patient infomation");
 		setSize(screenDimensions.width/2, screenDimensions.height/2); 
 		setLocation(new Point(screenDimensions.width/4, screenDimensions.height/4));
-		
+				
 		
 				
 		
