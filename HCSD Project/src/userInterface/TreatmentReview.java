@@ -65,7 +65,7 @@ public class TreatmentReview extends JFrame {
 			
 			while (rs.next()) { 
 				
-				box.addItem(rs.getString("Patient.Patient.ID")+" "+rs.getString("Patient.Firstname")+" "+rs.getString("Patient.Surname")+"("+rs.getString("Address.Postcode")+")"); 
+				box.addItem(rs.getString("PatientID")+" "+rs.getString("Firstname")+" "+rs.getString("Surname")+"("+rs.getString("Postcode")+")"); 
 				
 				}
 			con.close();
@@ -107,7 +107,7 @@ public class TreatmentReview extends JFrame {
 		//event listeners 
 		confirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panel.setVisible(false);
+				panel.setVisible	(false);
 				
 				Connection conn = null;
 				String DB="jdbc:mysql://stusql.dcs.shef.ac.uk/team019?user=team019&password=6e84e2f3";
