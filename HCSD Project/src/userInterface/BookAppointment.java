@@ -33,8 +33,8 @@ public class BookAppointment extends JFrame {
 		}
 		JComboBox year = new JComboBox();
 		//add all days of the month title
-		for (int i = 1; i<118;i++){
-			year.addItem(1900+i);
+		for (int i = 0; i<8;i++){
+			year.addItem(2017+i);
 		}
 		
 		JLabel t1 = new JLabel("Treatment 1");
