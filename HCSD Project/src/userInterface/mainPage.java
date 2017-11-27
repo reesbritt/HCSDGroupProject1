@@ -26,7 +26,7 @@ public class mainPage extends JFrame {
 		
 		JButton register = new JButton("Register client");
 		JButton calender = new JButton("Open calender");
-		JButton patientDeets = new JButton("Check patient details");
+		JButton patientDeets = new JButton("Existing patients");
 		JButton appointment = new JButton("Book appointment");
 		
 		buttonPanel.add(register);
@@ -58,7 +58,7 @@ public class mainPage extends JFrame {
 		
 		patientDeets.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				PatientInfomation.main(new String[] {});
+				PatientMenu.main(new String[] {});
 			}
 		});
 		

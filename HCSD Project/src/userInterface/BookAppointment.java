@@ -139,7 +139,7 @@ public class BookAppointment extends JFrame {
 				Integer max = 0;
 				try {
 					statement  = con.createStatement();
-					maxString = "SELECT Patient.PatientID FROM Patient WHERE Patient.Firstname=" + name + "AND Address.Postcode= "+address+ "INNER JOIN Address ON Patient.PatientID=Address.PatientID"  ;
+					maxString = "SELECT Patient.PatientID FROM Patient WHERE Patient.Firstname=" + name + "AND Address.Postcode= "+address+ " INNER JOIN Address ON Patient.PatientID=Address.PatientID"  ;
 					rs = statement.executeQuery(maxString);
 					rs.next();
 					patientID = rs.getInt(1);
@@ -241,6 +241,10 @@ public class BookAppointment extends JFrame {
 		container.setLayout(new BorderLayout());
 		container.add(appointmentPanel, BorderLayout.CENTER);
 		container.add(buttonPanel, BorderLayout.NORTH);
+	}
+	public static void main(String[]  args) {
+		BookAppointment page = new BookAppointment();
+		page.setVisible(true);
 	}
 }
 
