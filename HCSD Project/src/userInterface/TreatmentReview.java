@@ -60,12 +60,12 @@ public class TreatmentReview extends JFrame {
 		
 		try {
 			statement = con.createStatement();
-			nameQuery = "SELECT Patient.Firstname, Patient.Surname, Address.Postcode from Patient INNER JOIN Address ON Patient.PatientID=Address.PatientID";
+			nameQuery = "SELECT Patient.PatientID, Patient.Firstname, Patient.Surname, Address.Postcode from Patient INNER JOIN Address ON Patient.PatientID=Address.PatientID";
 			rs = statement.executeQuery(nameQuery);
 			
 			while (rs.next()) { 
 				
-				box.addItem(rs.getString("Patient.Firstname")+" "+rs.getString("Patient.Surname")+"("+rs.getString("Address.Postcode")+")"); 
+				box.addItem(rs.getString("Patient.Patient.ID")+" "+rs.getString("Patient.Firstname")+" "+rs.getString("Patient.Surname")+"("+rs.getString("Address.Postcode")+")"); 
 				
 				}
 			con.close();
@@ -108,6 +108,47 @@ public class TreatmentReview extends JFrame {
 		confirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panel.setVisible(false);
+				
+				Connection conn = null;
+				String DB="jdbc:mysql://stusql.dcs.shef.ac.uk/team019?user=team019&password=6e84e2f3";
+				
+				
+				String boxString = box.getSelectedItem().toString();
+				String PatientID = "";
+				while (boxString.charAt(0) != ' ') {
+					PatientID = PatientID + boxString.charAt(0);
+				}
+				
+				String appointmentQuery;
+				ResultSet ars;
+				Statement appStatement;
+				String treatmentType = "";
+				
+				try {
+					conn = DriverManager.getConnection(DB);
+					appStatement = conn.createStatement();
+					appointmentQuery = "SELECT Appointment.TreatmentID_1, Appointment.CostAssigned, Receipt.Paid FROM Appointment WHERE PatientID = "+ PatientID +" INNER JOIN Receipt ON Appointment.AppointmentID =Receipt.AppointmentID";
+					ars = appStatement.executeQuery(appointmentQuery);
+					while (ars.next()) {
+						
+						if (ars.getInt("Appointment.TreatmentID_1") == 1) {treatmentType = "Check up";}
+						else if (ars.getInt("Appointment.TreatmentID_1") == 2) {treatmentType = "Hygiene visit";}
+						else if (ars.getInt("Appointment.TreatmentID_1") == 3) {treatmentType = "Silver amalgam filling";}
+						else if (ars.getInt("Appointment.TreatmentID_1") == 4) {treatmentType = "White resin filling";}
+						else if (ars.getInt("Appointment.TreatmentID_1") == 5) {treatmentType = "Gold crown";}
+						
+						Boolean paidStatus = false;
+						if	(ars.getBoolean("Receipt.Paid")) {paidStatus = true;}
+						
+						
+						costs.addElement(treatmentType + " £" + ars.getString("Appointment.CostAssigned")+ " " + paidStatus); } 
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
 				infoPanel.setVisible(true);
 			}
 		});
