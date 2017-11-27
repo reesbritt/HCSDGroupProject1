@@ -27,14 +27,15 @@ public class calculateCost {
 		ResultSet rs;
 		
 		statement = con.createStatement();
-		noTreatmentQuery = "SELECT treatmentID from Appointment where PatientID="+patientID;
+		noTreatmentQuery = "SELECT treatmentID_1 from Appointment where PatientID="+patientID;
 		rs = statement.executeQuery(noTreatmentQuery);
+		rs.next();
 		
 		int x = 0;
 		int noTreatment = 0;
 		
 		while(rs.next()) {
-			x = rs.getInt("treatmentID");
+			x = rs.getInt("treatmentID_1");
 			if (x == costTreatmentID) {noTreatment += 1;}
 			else if (costTreatmentID == 3 || costTreatmentID == 4 || costTreatmentID == 5) {
 				if (x == 3 || x == 4 || x == 5){noTreatment += 1;}
@@ -49,13 +50,14 @@ public class calculateCost {
 		healthStatement = con.createStatement();
 		healthQuery = "SELECT HealthcareID from Patient where PatientID="+patientID;
 		hrs = healthStatement.executeQuery(healthQuery);
-		
+		hrs.next();
 		int healthcare = hrs.getInt("HealthcareID");
 		
 		Statement costStatement;
 		ResultSet crs;
 		String costQuery;
-				
+		healthStatement.close();
+		
 		costStatement = con.createStatement();
 		costQuery = "SELECT TreatmentID, Cost from Treatment";
 		crs = costStatement.executeQuery(costQuery);
@@ -66,17 +68,18 @@ public class calculateCost {
 		int whiteCost = 0;
 		int goldCost = 0;
 		
-		while(rs.next()) {
-			if (rs.getInt("TreatmentID") == check_up) {checkUpCost = rs.getInt("Cost");}
-			else if (rs.getInt("TreatmentID") == hygiene) {hygieneCost = rs.getInt("Cost");}
-			else if (rs.getInt("TreatmentID") == silver) {silverCost = rs.getInt("Cost");}
-			else if (rs.getInt("TreatmentID") == white) {whiteCost = rs.getInt("Cost");}
-			else if (rs.getInt("TreatmentID") == gold) {goldCost = rs.getInt("Cost");}
+		while(crs.next()) {
+			if (crs.getInt("TreatmentID") == check_up) {checkUpCost = crs.getInt("Cost");}
+			else if (crs.getInt("TreatmentID") == hygiene) {hygieneCost = crs.getInt("Cost");}
+			else if (crs.getInt("TreatmentID") == silver) {silverCost = crs.getInt("Cost");}
+			else if (crs.getInt("TreatmentID") == white) {whiteCost = crs.getInt("Cost");}
+			else if (crs.getInt("TreatmentID") == gold) {goldCost = crs.getInt("Cost");}
 		}
 		
 		int repairPrice = repairCost(costTreatmentID, silverCost, whiteCost, goldCost);
 		int noTreatments = 0;
 		
+		con.close();
 		if (costTreatmentID == check_up) {
 			if (healthcare == 0) {return checkUpCost;}
 			else if (noTreatments > 1) {return checkUpCost;}

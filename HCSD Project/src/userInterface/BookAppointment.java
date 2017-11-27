@@ -139,11 +139,11 @@ public class BookAppointment extends JFrame {
 				Integer max = 0;
 				try {
 					statement  = con.createStatement();
-					maxString = "SELECT Patient.PatientID FROM Patient 	JOIN Address ON Patient.PatientID=Address.PatientID WHERE Patient.Firstname= " + name + "AND Address.Postcode= "+ address;
-							
+					maxString = "SELECT Patient.PatientID, Address.Postcode  FROM Patient INNER JOIN Address ON Patient.PatientID=Address.PatientID WHERE Patient.Firstname = '"+ name+"'";	
 					rs = statement.executeQuery(maxString);
-					rs.next();
-					patientID = rs.getInt(1);
+					while(rs.next()) {if (address == rs.getString("Address.Postcode")); {patientID = rs.getInt(1);}}
+					
+					
 					
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -161,7 +161,7 @@ public class BookAppointment extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				String SQL = "INSERT INTO Appointment VALUES (?,?,?,?,?,?,?,?,?)";
+				String SQL = "INSERT INTO Appointment VALUES (?,?,?,?,?,?,?,?)";
 				java.sql.PreparedStatement pstmt;
 				try {
 					pstmt = con.prepareStatement(SQL);
@@ -172,8 +172,7 @@ public class BookAppointment extends JFrame {
 					pstmt.setString(5,start);
 					pstmt.setString(6, end);
 					pstmt.setInt(7, treatmentCode);
-					pstmt.setInt(8, 0);
-					pstmt.setInt(9, calculateCost.calculate(patientID,treatmentCode));
+					pstmt.setInt(8, calculateCost.calculate(patientID,treatmentCode));
 					pstmt.executeUpdate();
 					pstmt.close();
 				} catch (SQLException e1) {
