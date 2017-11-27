@@ -65,7 +65,7 @@ public class TreatmentReview extends JFrame {
 			
 			while (rs.next()) { 
 				
-				box.addItem(rs.getString("PatientID")+" "+rs.getString("Firstname")+" "+rs.getString("Surname")+"("+rs.getString("Postcode")+")"); 
+				box.addItem(rs.getString("PatientID")+" "+rs.getString("Firstname")+" "+rs.getString("Surname")+" ("+rs.getString("Postcode")+")"); 
 				
 				}
 			con.close();
@@ -88,7 +88,7 @@ public class TreatmentReview extends JFrame {
 		treatmentList.setLayoutOrientation(JList.VERTICAL);
 		//To add to list 'treatmentList' do costs.addElement(String)
 		infoPanel.add(treatmentList);
-		JLabel p = new JLabel("Total Payments: ");
+		JLabel p = new JLabel("Unpaid fees: ");
 		JLabel payment = new JLabel(" ");
 		payment.setBorder(new CompoundBorder(
 				BorderFactory.createLineBorder(Color.black), new EmptyBorder(15,50,15,50)
@@ -99,9 +99,9 @@ public class TreatmentReview extends JFrame {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout());
 		//add a button to see breakdown of payments 
-		JButton seePayments = new JButton("Click here to see a breakdown of your debt");
+		
 		JButton backButton = new JButton("Home");
-		buttonPanel.add(seePayments);
+		
 		buttonPanel.add(backButton);
 		
 		//event listeners 
@@ -120,12 +120,27 @@ public class TreatmentReview extends JFrame {
 					PatientID = PatientID + boxString.charAt(i);
 					i += 1;
 				}
+				
+				int spaceCount = 0;
+				i = 0;
+				String patientName = "";
+				while(spaceCount < 3) {
+					if (boxString.charAt(i) == ' '){
+						if (spaceCount == 1) {patientName = patientName + boxString.charAt(i);}
+							spaceCount += 1;
+							i += 1;}
+					else if (spaceCount != 3 && spaceCount != 0) {
+						patientName = patientName + boxString.charAt(i);
+						i += 1;}
+					else {i += 1;}
+				}
+				pName.setText(patientName);
 				System.out.println(PatientID);
 				String appointmentQuery;
 				ResultSet ars;
 				Statement appStatement;
 				String treatmentType = "";
-				
+				int unpaidFees = 0;
 				try {
 					conn = DriverManager.getConnection(DB);
 					appStatement = conn.createStatement();
@@ -141,6 +156,7 @@ public class TreatmentReview extends JFrame {
 						
 						String paidStatus = "Not paid";
 						if	(ars.getBoolean("Receipt.Paid")) {paidStatus = "Paid";}
+						else {unpaidFees += ars.getInt("Appointment.CostAssigned");}
 						
 						
 						costs.addElement(treatmentType + " £" + ars.getString("Appointment.CostAssigned")+ " " + paidStatus); } 
@@ -150,7 +166,7 @@ public class TreatmentReview extends JFrame {
 					e1.printStackTrace();
 				}
 				
-				
+				payment.setText(Integer.toString(unpaidFees));
 				infoPanel.setVisible(true);
 			}
 		});

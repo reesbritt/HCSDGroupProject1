@@ -26,7 +26,7 @@ public class PatientMenu extends JFrame{
 		//event listeners
 		info.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				PatientInfomation.main(new String[] {});
+				TreatmentReview.main(new String[] {});
 			}
 		});
 		subscribe.addActionListener(new ActionListener() {
