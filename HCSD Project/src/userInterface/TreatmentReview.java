@@ -115,10 +115,12 @@ public class TreatmentReview extends JFrame {
 				
 				String boxString = box.getSelectedItem().toString();
 				String PatientID = "";
-				while (boxString.charAt(0) != ' ') {
-					PatientID = PatientID + boxString.charAt(0);
+				int i = 0;
+				while (boxString.charAt(i) != ' ') {
+					PatientID = PatientID + boxString.charAt(i);
+					i += 1;
 				}
-				
+				System.out.println(PatientID);
 				String appointmentQuery;
 				ResultSet ars;
 				Statement appStatement;
@@ -127,7 +129,7 @@ public class TreatmentReview extends JFrame {
 				try {
 					conn = DriverManager.getConnection(DB);
 					appStatement = conn.createStatement();
-					appointmentQuery = "SELECT Appointment.TreatmentID_1, Appointment.CostAssigned, Receipt.Paid FROM Appointment WHERE PatientID = "+ PatientID +" INNER JOIN Receipt ON Appointment.AppointmentID =Receipt.AppointmentID";
+					appointmentQuery = "SELECT Appointment.TreatmentID_1, Appointment.CostAssigned, Receipt.Paid FROM Appointment INNER JOIN Receipt ON Appointment.AppointmentID = Receipt.AppointmentID WHERE Appointment.PatientID = "+ PatientID;
 					ars = appStatement.executeQuery(appointmentQuery);
 					while (ars.next()) {
 						
@@ -137,8 +139,8 @@ public class TreatmentReview extends JFrame {
 						else if (ars.getInt("Appointment.TreatmentID_1") == 4) {treatmentType = "White resin filling";}
 						else if (ars.getInt("Appointment.TreatmentID_1") == 5) {treatmentType = "Gold crown";}
 						
-						Boolean paidStatus = false;
-						if	(ars.getBoolean("Receipt.Paid")) {paidStatus = true;}
+						String paidStatus = "Not paid";
+						if	(ars.getBoolean("Receipt.Paid")) {paidStatus = "Paid";}
 						
 						
 						costs.addElement(treatmentType + " £" + ars.getString("Appointment.CostAssigned")+ " " + paidStatus); } 
