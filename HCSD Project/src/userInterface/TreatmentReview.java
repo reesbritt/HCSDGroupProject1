@@ -135,7 +135,6 @@ public class TreatmentReview extends JFrame {
 					else {i += 1;}
 				}
 				pName.setText(patientName);
-				System.out.println(PatientID);
 				String appointmentQuery;
 				ResultSet ars;
 				Statement appStatement;

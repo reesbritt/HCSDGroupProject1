@@ -163,7 +163,7 @@ public class BookAppointment extends JFrame {
 					e1.printStackTrace();
 				}
 				
-				String SQL = "INSERT INTO Appointment VALUES (?,?,?,?,?,?,?,?)";
+				String SQL = "INSERT INTO Appointment VALUES (?,?,?,?,?,?,?,?,0)";
 				java.sql.PreparedStatement pstmt;
 				int calculatedCost = 0;
 				
