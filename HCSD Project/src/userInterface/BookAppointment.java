@@ -139,7 +139,7 @@ public class BookAppointment extends JFrame {
 				Integer max = 0;
 				try {
 					statement  = con.createStatement();
-					maxString = "SELECT Patient.PatientID FROM Patient INNER JOIN Address ON Patient.PatientID=Address.PatientID WHERE Patient.Firstname=" + name + "AND Address.Postcode= "+ address;
+					maxString = "SELECT Patient.PatientID FROM Patient 	JOIN Address ON Patient.PatientID=Address.PatientID WHERE Patient.Firstname= " + name + "AND Address.Postcode= "+ address;
 							
 					rs = statement.executeQuery(maxString);
 					rs.next();
@@ -166,14 +166,14 @@ public class BookAppointment extends JFrame {
 				try {
 					pstmt = con.prepareStatement(SQL);
 					pstmt.setInt(1, appointmentNum);
-					pstmt.setInt(2, p1Code);
+					pstmt.setInt(2, partnerCode);
 					pstmt.setInt(3, patientID);
 					pstmt.setString(4, yearVal+"-" +monthVal+"-"+dayValue);
 					pstmt.setString(5,start);
 					pstmt.setString(6, end);
-					pstmt.setInt(7, t1Code);
-					pstmt.setInt(8, t2Code);
-					pstmt.setInt(9, calculateCost.calculate(patientID,t1Code));
+					pstmt.setInt(7, treatmentCode);
+					pstmt.setInt(8, 0);
+					pstmt.setInt(9, calculateCost.calculate(patientID,treatmentCode));
 					pstmt.executeUpdate();
 					pstmt.close();
 				} catch (SQLException e1) {
